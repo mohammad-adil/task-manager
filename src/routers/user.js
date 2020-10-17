@@ -86,7 +86,7 @@ router.get('/users/:id', async(req, res) => {
         }
         res.send(user)
     } catch (e) {
-        console.log(res)
+
         res.status(500).send()
 
     }
