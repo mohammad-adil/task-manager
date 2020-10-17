@@ -57,6 +57,14 @@ const userSchema = new mongoose.Schema({
 })
 
 
+userSchema.methods.toJSON = function() {
+    const user = this
+    const userobj = user.toObject()
+    delete userobj.password
+    delete userobj.tokens
+
+    return userobj
+}
 
 
 
@@ -69,6 +77,8 @@ userSchema.methods.generateAuthToken = async function() {
 
     return token
 }
+
+
 
 userSchema.statics.findByCredentials = async(email, password) => {
     const user = await User.findOne({ email })
@@ -101,5 +111,4 @@ userSchema.pre('save', async function(next) {
 })
 
 const User = mongoose.model('Users', userSchema)
-
 module.exports = User
